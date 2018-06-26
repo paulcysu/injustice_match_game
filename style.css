@@ -1,3 +1,151 @@
-div {
-    border: 2px solid black;
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    box-sizing: border-box;
+}
+
+/* header */
+
+header {
+    height: 14vh;
+}
+
+#game_title {
+    position: relative;
+    height: 90%;
+}
+
+#game_title img {
+    height: 90%;
+    margin: 0 auto;
+    display: flex;
+    position: relative;
+    top: 10%;
+}
+
+#middle_section {
+    display: grid;
+    grid-template-columns: 1fr 7fr 1fr;
+}
+
+/* asides */
+
+#aside_left, #aside_right {
+    width: 100%;
+    display: inline-block;
+}
+
+#aside_right {
+    position: relative;
+    right: 0;
+}
+
+#player_left, #player_right {
+    display: inline-block;
+    width: 100%;
+}
+
+#player_left img, #player_right img {
+    width: 100%;
+    position: relative;
+}
+
+.player_left_card, .player_right_card {
+    width: 50%;
+    display: block;
+    margin: 0 auto;
+    position: relative;
+}
+
+.player_left_card img, .player_right_card img {
+    position: relative;
+    width: 100%;
+}
+
+#player_left_health, #player_right_health {
+    height: 4vh;
+    position: relative;
+    text-align: center;
+}
+
+#player_left_health1,
+#player_left_health2,
+#player_left_health3,
+#player_right_health1,
+#player_right_health2,
+#player_right_health3 {
+    background-color: greenyellow;
+    display: inline-block;
+    width: 20%;
+    height: 100%;
+    margin: 0;
+    position: relative;
+    text-align: center;
+    border: 1px solid black;
+}
+
+/* center */
+
+#center_display {
+    display: inline-block;
+}
+
+.card {
+    width: 18%;
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.card img {
+    position: relative;
+    width: 60%;
+}
+
+.card_back {
+    position: relative;
+    width: 10%;
+}
+
+#center_display {
+    display: inline-block;
+    justify-content: center;
+}
+
+#row1, #row2, #row3, #row4 {
+    margin-top: 2%;
+    margin-bottom: 2%;
+    text-align: center;
+}
+
+/* footer */
+
+h3 {
+    margin: 0;
+    text-align: center;
+}
+
+#stats_row {
+    text-align: center;
+}
+
+ul {
+    padding: 0;
+    display: inline-block;
+    position: relative;
+    left: 1%;
+}
+
+li {
+    display: inline-block;
+    list-style-type: none;
+    padding: 0;
+    margin: 0 7em;
+}
+
+#reset_button {
+    display: inline-block;
 }
