@@ -110,7 +110,7 @@ header {
     width: 10%;
 }
 
-#center_display {
+#game-area {
     display: inline-block;
     justify-content: center;
 }
@@ -136,14 +136,14 @@ ul {
     padding: 0;
     display: inline-block;
     position: relative;
-    left: 1%;
+    left: -6%;
 }
 
 li {
     display: inline-block;
     list-style-type: none;
     padding: 0;
-    margin: 0 7em;
+    margin: 0 6em;
 }
 
 #reset_button {
