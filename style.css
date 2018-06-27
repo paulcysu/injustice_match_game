@@ -90,19 +90,26 @@ header {
 
 /* center */
 
-#center_display {
-    display: inline-block;
+#game-area {
+    text-align: center;
+}
+
+#card_area {
+    height: 100%;
+    padding-top: 4%;
 }
 
 .card {
     width: 18%;
+    height: 19%;
     display: inline-block;
-    margin: 0 auto;
+    position: relative;
+    margin-bottom: 1%;
 }
 
 .card img {
-    position: relative;
     width: 60%;
+    height: 100%;
 }
 
 .card_back {
@@ -110,15 +117,10 @@ header {
     width: 10%;
 }
 
-#game-area {
-    display: inline-block;
-    justify-content: center;
-}
-
-#row1, #row2, #row3, #row4 {
-    margin-top: 2%;
-    margin-bottom: 2%;
-    text-align: center;
+.front, .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
 }
 
 /* footer */
@@ -148,4 +150,10 @@ li {
 
 #reset_button {
     display: inline-block;
+}
+
+/* functionality below */
+
+.hidden .back {
+    display: none;
 }
