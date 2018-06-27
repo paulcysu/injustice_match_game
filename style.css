@@ -134,18 +134,9 @@ h3 {
     text-align: center;
 }
 
-ul {
-    padding: 0;
+#stats_row div {
     display: inline-block;
-    position: relative;
-    left: -6%;
-}
-
-li {
-    display: inline-block;
-    list-style-type: none;
-    padding: 0;
-    margin: 0 6em;
+    margin: 1% 2%;
 }
 
 #reset_button {
