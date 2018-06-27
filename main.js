@@ -24,6 +24,7 @@ function card_clicked() {
             first_card_clicked.off("click");
             return first_card_clicked;
         } else {
+            $(".card").off('click');
             second_card_clicked = $(this);
             if ($(first_card_clicked).find(".card_front").attr("src") === $(second_card_clicked).find(".card_front").attr("src")) {
                 match_counter++;
@@ -32,13 +33,12 @@ function card_clicked() {
                 if (match_counter === total_possible_matches) {
                     alert("You WON!");
                 } else {
+                    $(".card").on("click", card_clicked);
                     return;
                 }
             } else {
                 click_disabled = true;
                 setTimeout(flip_back, 2000) // what to google for?
-                click_disabled = false;
-                first_card_clicked.on("click", card_clicked);
             }
         }
     }
@@ -49,4 +49,6 @@ function flip_back() {
     $(second_card_clicked).removeClass("hidden");
     first_card_clicked = null;
     second_card_clicked = null;
+    $(".card").on("click", card_clicked);
+    click_disabled = false;
 }
