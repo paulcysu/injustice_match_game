@@ -10,10 +10,10 @@ function add_event_listener () {
 
 var first_card_clicked = null;
 var second_card_clicked = null;
-var total_possible_matches = 2;
+var total_possible_matches = 10;
 var match_counter = 0;
 var click_disabled = false;
-//
+
 function card_clicked() {
     if (click_disabled === true) {
         return;
@@ -21,6 +21,7 @@ function card_clicked() {
         $(this).addClass("hidden");
         if (first_card_clicked === null) {
             first_card_clicked = $(this);
+            first_card_clicked.off("click");
             return first_card_clicked;
         } else {
             second_card_clicked = $(this);
@@ -36,13 +37,14 @@ function card_clicked() {
             } else {
                 click_disabled = true;
                 setTimeout(flip_back, 2000) // what to google for?
+                click_disabled = false;
+                first_card_clicked.on("click", card_clicked);
             }
         }
     }
 }
 
 function flip_back() {
-    click_disabled = false;
     $(first_card_clicked).removeClass("hidden");
     $(second_card_clicked).removeClass("hidden");
     first_card_clicked = null;
