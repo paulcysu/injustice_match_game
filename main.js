@@ -1,11 +1,12 @@
 $(document).ready(run_on_load);
 
 function run_on_load () {
+    $(".card").addClass("flippable");
     add_event_listener();
 }
 
 function add_event_listener () {
-    $(".card").click(card_clicked);
+    $("#game-area").on("click", ".flippable", card_clicked)
 }
 
 var first_card_clicked = null;
@@ -13,9 +14,8 @@ var second_card_clicked = null;
 var total_possible_matches = 10;
 var match_counter = 0;
 var click_disabled = false;
-var matches = match_counter;
 var attempt = 0;
-var accuracy = matches / attempt;
+var accuracy = match_counter / attempt;
 
 function card_clicked() {
     if (click_disabled === true) {
@@ -24,13 +24,13 @@ function card_clicked() {
         $(this).addClass("hidden");
         if (first_card_clicked === null) {
             first_card_clicked = $(this);
-            first_card_clicked.off("click");
+            first_card_clicked.removeClass("flippable");
             return first_card_clicked;
         } else {
             attempt++;
             second_card_clicked = $(this);
             if ($(first_card_clicked).find(".card_front").attr("src") === $(second_card_clicked).find(".card_front").attr("src")) {
-                second_card_clicked.off("click");
+                second_card_clicked.removeClass("flippable");
                 match_counter++;
                 first_card_clicked = null;
                 second_card_clicked = null;
@@ -42,9 +42,6 @@ function card_clicked() {
             } else {
                 click_disabled = true;
                 setTimeout(flip_back, 2000);
-                // make unable to click during match and mismatch
-                // add a class to make it unclickable.
-                    // if match, add a class to remove click handler
             }
         }
     }
@@ -53,9 +50,8 @@ function card_clicked() {
 function flip_back() {
     $(first_card_clicked).removeClass("hidden");
     $(second_card_clicked).removeClass("hidden");
-    first_card_clicked.on("click", card_clicked);
+    $(first_card_clicked).addClass("flippable");
     first_card_clicked = null;
     second_card_clicked = null;
     click_disabled = false;
 }
-
