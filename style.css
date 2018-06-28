@@ -11,7 +11,7 @@ body {
 /* header */
 
 header {
-    height: 14vh;
+    height: 7vh;
 }
 
 #game_title {
@@ -20,7 +20,7 @@ header {
 }
 
 #game_title img {
-    height: 90%;
+    height: 170%;
     margin: 0 auto;
     display: flex;
     position: relative;
@@ -40,13 +40,18 @@ header {
 }
 
 #aside_right {
-    position: relative;
     right: 0;
 }
 
 #player_left, #player_right {
     display: inline-block;
     width: 100%;
+    height: 25%;
+}
+
+#player_left img{
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
 }
 
 #player_left img, #player_right img {
@@ -139,8 +144,9 @@ h3 {
     margin: 1% 2%;
 }
 
-#reset_button {
+#reset {
     display: inline-block;
+    position: relative;
 }
 
 /* functionality below */

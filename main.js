@@ -1,6 +1,10 @@
 $(document).ready(run_on_load);
 
+var image_array = [];
+
 function run_on_load () {
+    randomize(image_front_array);
+    add_cards();
     $(".card").addClass("flippable");
     add_event_listener();
     game_played = 0;
@@ -82,4 +86,74 @@ function display_stats () {
 
 function run_accuracy () {
     accuracy = ((match_counter / attempt)*100).toFixed(2) + "%";
+}
+
+{/* <div class="card">
+    <div class="front">
+        <img class="card_front" src="img/red_anti_air.jpg">
+    </div>
+    <div class="back">
+        <img class="card_back" src="img/recruit_image.jpg">
+    </div>
+</div> */}
+
+var image_front_array = [
+    "img/charizard.png",
+    "img/charizard.png", 
+    "img/mewtwo.png", 
+    "img/mewtwo.png",
+    "img/agumon.jpg",
+    "img/agumon.jpg",
+    "img/jigglypuff.png",
+    "img/jigglypuff.png",
+    "img/pikachu.png",
+    "img/pikachu.png",
+    "img/blastoise.gif",
+    "img/blastoise.gif",
+    "img/snorlax.png",
+    "img/snorlax.png",
+    "img/meowth.png",
+    "img/meowth.png",
+    "img/bulbasaur.png",
+    "img/bulbasaur.png",
+    "img/squirtle.jpg",
+    "img/squirtle.jpg"
+]
+
+var random_image_array = [];
+
+function randomize (array) {
+    while (array.length > 0) {
+        var chosen_random = array.splice(Math.floor(Math.random() * array.length), 1)[0];
+        random_image_array.push(chosen_random);
+    }
+}
+
+function add_cards () {
+    for (var x = 0; x < 20; x++) {
+        var chosen_img = random_image_array.splice(19 - x, 1)[0];
+        console.log(chosen_img);
+        var card_container = $("<div>", {
+            "class": "card"
+        });
+        var card_front = $("<div>", {
+            "class": "front"
+        });
+        $("#card_area").append(card_container);
+        var card_front_img = $("<img>", {
+            attr: {src: chosen_img},
+            "class": "card_front"
+        });
+        card_container.append(card_front);
+        card_front.append(card_front_img);
+        var card_back = $("<div>", {
+            "class": "back",
+        });
+        var card_back_img = $("<img>", {
+            attr: {src: 'img/pokeball.png'},
+            "class": "card_back"
+        })
+    }
+    $(".card").append(card_back);
+    $(".back").append(card_back_img);
 }
