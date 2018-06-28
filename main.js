@@ -27,6 +27,7 @@ var match_counter = 0;
 var click_disabled = false;
 var attempt = 0;
 var accuracy = 0;
+var turn_index = false;
 
 function card_clicked() {
     if (click_disabled === true) {
@@ -43,12 +44,74 @@ function card_clicked() {
             if ($(first_card_clicked).find(".card_front").attr("src") === $(second_card_clicked).find(".card_front").attr("src")) {
                 second_card_clicked.removeClass("flippable");
                 match_counter++;
+                var match_image = $(first_card_clicked).find(".card_front").attr("src");
                 first_card_clicked = null;
                 second_card_clicked = null;
                 run_accuracy();
                 display_stats();
+                if(turn_index === false) {
+                    turn_index = true;
+                    var player_left_hand_1 = $("#left_card_1");
+                    var player_left_hand_2 = $("#left_card_2");
+                    var player_left_hand_3 = $("#left_card_3");
+                    var player_left_hand_4 = $("#left_card_4");
+                    var player_left_hand_5 = $("#left_card_5");
+                    // if (player_left_hand_1.attr("src") === "img/empty_card.png") {
+                    //     player_left_hand_1.attr("src", match_image);
+                    // } else if (player_left_hand_2.attr("src") === "img/empty_card.png") {
+                    //     player_right_hand_1.attr("src", match_image);
+                    // }
+                    switch ("img/empty_card.png") {
+                        case player_left_hand_1.attr("src"):
+                            player_left_hand_1.attr("src", match_image);
+                            break;
+                        case player_left_hand_2.attr("src"):
+                            player_left_hand_2.attr("src", match_image);   
+                            break;
+                        case player_left_hand_3.attr("src"):
+                            player_left_hand_3.attr("src", match_image);   
+                            break;
+                        case player_left_hand_4.attr("src"):
+                            player_left_hand_4.attr("src", match_image);   
+                            break;
+                        case player_left_hand_5.attr("src"):
+                            player_left_hand_5.attr("src", match_image);   
+                            break;
+                    }
+                } else {
+                    turn_index = false;
+                    var player_right_hand_1 = $("#right_card_1");
+                    var player_right_hand_2 = $("#right_card_2");
+                    var player_right_hand_3 = $("#right_card_3");
+                    var player_right_hand_4 = $("#right_card_4");
+                    var player_right_hand_5 = $("#right_card_5");
+                    // if (player_right_hand_1.attr("src") === "img/empty_card.png") {
+                    //     player_right_hand_1.attr("src", match_image);
+                    // }
+                    switch ("img/empty_card.png") {
+                        case player_right_hand_1.attr("src"):
+                            player_right_hand_1.attr("src", match_image);
+                            break;
+                        case player_right_hand_2.attr("src"):
+                            player_right_hand_2.attr("src", match_image);
+                            break; 
+                        case player_right_hand_3.attr("src"):
+                            player_right_hand_3.attr("src", match_image);
+                            break;
+                        case player_right_hand_4.attr("src"):
+                            player_right_hand_4.attr("src", match_image);
+                            break;
+                        case player_right_hand_5.attr("src"):
+                            player_right_hand_5.attr("src", match_image);
+                            break;   
+                    }
+                }
                 if (match_counter === total_possible_matches) {
-                    alert("You WON!");
+                    alert("!!!!BATTLE!!!!");
+                    // how to add value to images?
+                    if(player_left_hand_1.attr("value") > player_right_hand_1.attr("value")) {
+                        $("#player_left_health").backgroundColor("white");
+                    }
                 } else {
                     return;
                 }
@@ -56,7 +119,7 @@ function card_clicked() {
                 click_disabled = true;
                 run_accuracy();
                 display_stats();
-                setTimeout(flip_back, 2000);
+                setTimeout(flip_back, 1000);
             }
         }
     }
