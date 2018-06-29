@@ -61,10 +61,19 @@ function card_clicked() {
                 var firstAvailableSlot = $(availableLeftHand[0]);
                 firstAvailableSlot.removeClass('empty');
                 firstAvailableSlot.attr("src", match_image);
+                // if (turn_index) {
+                //     all_matched_pokemon_battle();
+                //     }
                 turn_index = !turn_index;
                 // above code by dan //
                 if (match_counter === total_possible_matches) {
                     alert("!!!!BATTLE!!!!");
+                    all_matched_pokemon_battle();
+                    if (player_1_health === 0) {
+                        alert("!!!!Player 2 Wins!!!!")
+                    } else if (player_2_health === 0) {
+                        alert("!!!Player 1 Wins!!!!")
+                    }
                 } else {
                     return;
                 }
@@ -104,36 +113,27 @@ function run_accuracy () {
     accuracy = ((match_counter / attempt)*100).toFixed(2) + "%";
 }
 
-{/* <div class="card">
-    <div class="front">
-        <img class="card_front" src="img/red_anti_air.jpg">
-    </div>
-    <div class="back">
-        <img class="card_back" src="img/recruit_image.jpg">
-    </div>
-</div> */}
-
 var image_front_array = [
-    "img/charizard.png",
-    "img/charizard.png", 
-    "img/mewtwo.png", 
-    "img/mewtwo.png",
-    "img/agumon.jpg",
-    "img/agumon.jpg",
-    "img/jigglypuff.png",
-    "img/jigglypuff.png",
-    "img/pikachu.png",
-    "img/pikachu.png",
-    "img/blastoise.gif",
-    "img/blastoise.gif",
-    "img/snorlax.png",
-    "img/snorlax.png",
-    "img/meowth.png",
-    "img/meowth.png",
-    "img/bulbasaur.png",
-    "img/bulbasaur.png",
-    "img/squirtle.jpg",
-    "img/squirtle.jpg"
+    "img/aquaman.png",
+    "img/aquaman.png", 
+    "img/green_arrow.jpg",
+    "img/green_arrow.jpg",
+    "img/mario.jpg",
+    "img/mario.jpg",
+    "img/flash.png",
+    "img/flash.png",
+    "img/harley_quinn.png",
+    "img/harley_quinn.png",
+    "img/joker.png",
+    "img/joker.png",
+    "img/robin.png",
+    "img/robin.png",
+    "img/super_girl.png",
+    "img/super_girl.png",
+    "img/wonder_woman.jpg",
+    "img/wonder_woman.jpg",
+    "img/batgirl.jpeg",
+    "img/batgirl.jpeg"
 ]
 
 var random_image_array = [];
@@ -166,7 +166,7 @@ function add_cards () {
             "class": "back",
         });
         var card_back_img = $("<img>", {
-            attr: {src: 'img/pokeball.png'},
+            attr: {src: 'img/back_image.jpg'},
             "class": "card_back"
         })
     }
@@ -174,7 +174,21 @@ function add_cards () {
     $(".back").append(card_back_img);
 }
 
-function allMatchedPokemonBattle(){
+function matched_battle(){
+    var available_left_hand = $(".player_left_card > .filled").removeClass("filled");
+    var first_available_left_slot = $(available_left_hand[0]);
+    var clone_image_left = first_available_left_slot.clone().addClass("animate");
+    $("#left_card_1").parent().append(clone_image_left);
+    clone_image_left.css("position", "fixed");
+    clone_image_left.animate({left: "20%", height: "100%"});
+    var available_right_hand = $(".player_right_card > .filled").removeClass("filled");
+    var first_available_right_slot = $(available_right_hand[0]);
+    var clone_image_right = first_available_right_slot.clone().addClass("animate");
+    $("#right_card_1").parent().append(clone_image_right);
+    clone_image_right.css("position", "fixed");
+    clone_image_right.animate({right: "20%", height: "100%"});
+    clone_image_right.fadeOut();
+    
     //select the 1st available hand image on the player left side
     //select the 1st available hand image on the player right side
     //clone both images, put them in exactly the same spot as the origin.  the clones should have position fixed.  
