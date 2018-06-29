@@ -62,13 +62,13 @@ function card_clicked() {
                 firstAvailableSlot.removeClass('empty');
                 firstAvailableSlot.attr("src", match_image);
                 // if (turn_index) {
-                //     all_matched_pokemon_battle();
+                //     matched_battle();
                 //     }
                 turn_index = !turn_index;
                 // above code by dan //
                 if (match_counter === total_possible_matches) {
                     alert("!!!!BATTLE!!!!");
-                    all_matched_pokemon_battle();
+                    matched_battle();
                     if (player_1_health === 0) {
                         alert("!!!!Player 2 Wins!!!!")
                     } else if (player_2_health === 0) {
