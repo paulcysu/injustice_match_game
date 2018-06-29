@@ -49,69 +49,22 @@ function card_clicked() {
                 second_card_clicked = null;
                 run_accuracy();
                 display_stats();
-                if(turn_index === false) {
-                    turn_index = true;
-                    var player_left_hand_1 = $("#left_card_1");
-                    var player_left_hand_2 = $("#left_card_2");
-                    var player_left_hand_3 = $("#left_card_3");
-                    var player_left_hand_4 = $("#left_card_4");
-                    var player_left_hand_5 = $("#left_card_5");
-                    // if (player_left_hand_1.attr("src") === "img/empty_card.png") {
-                    //     player_left_hand_1.attr("src", match_image);
-                    // } else if (player_left_hand_2.attr("src") === "img/empty_card.png") {
-                    //     player_right_hand_1.attr("src", match_image);
-                    // }
-                    switch ("img/empty_card.png") {
-                        case player_left_hand_1.attr("src"):
-                            player_left_hand_1.attr("src", match_image);
-                            break;
-                        case player_left_hand_2.attr("src"):
-                            player_left_hand_2.attr("src", match_image);   
-                            break;
-                        case player_left_hand_3.attr("src"):
-                            player_left_hand_3.attr("src", match_image);   
-                            break;
-                        case player_left_hand_4.attr("src"):
-                            player_left_hand_4.attr("src", match_image);   
-                            break;
-                        case player_left_hand_5.attr("src"):
-                            player_left_hand_5.attr("src", match_image);   
-                            break;
-                    }
+                // below is code by dan - replace my switch & if conditionals. use array instead//
+                var currentPlayerSide = ''
+                if(turn_index){
+                    //player 2
+                    currentPlayerSide = 'right'
                 } else {
-                    turn_index = false;
-                    var player_right_hand_1 = $("#right_card_1");
-                    var player_right_hand_2 = $("#right_card_2");
-                    var player_right_hand_3 = $("#right_card_3");
-                    var player_right_hand_4 = $("#right_card_4");
-                    var player_right_hand_5 = $("#right_card_5");
-                    // if (player_right_hand_1.attr("src") === "img/empty_card.png") {
-                    //     player_right_hand_1.attr("src", match_image);
-                    // }
-                    switch ("img/empty_card.png") {
-                        case player_right_hand_1.attr("src"):
-                            player_right_hand_1.attr("src", match_image);
-                            break;
-                        case player_right_hand_2.attr("src"):
-                            player_right_hand_2.attr("src", match_image);
-                            break; 
-                        case player_right_hand_3.attr("src"):
-                            player_right_hand_3.attr("src", match_image);
-                            break;
-                        case player_right_hand_4.attr("src"):
-                            player_right_hand_4.attr("src", match_image);
-                            break;
-                        case player_right_hand_5.attr("src"):
-                            player_right_hand_5.attr("src", match_image);
-                            break;   
-                    }
+                    currentPlayerSide = 'left';
                 }
+                var availableLeftHand = $(".player_"+currentPlayerSide+"_card > .empty");
+                var firstAvailableSlot = $(availableLeftHand[0]);
+                firstAvailableSlot.removeClass('empty');
+                firstAvailableSlot.attr("src", match_image);
+                turn_index = !turn_index;
+                // above code by dan //
                 if (match_counter === total_possible_matches) {
                     alert("!!!!BATTLE!!!!");
-                    // how to add value to images?
-                    if(player_left_hand_1.attr("value") > player_right_hand_1.attr("value")) {
-                        $("#player_left_health").backgroundColor("white");
-                    }
                 } else {
                     return;
                 }
@@ -219,4 +172,20 @@ function add_cards () {
     }
     $(".card").append(card_back);
     $(".back").append(card_back_img);
+}
+
+function allMatchedPokemonBattle(){
+    //select the 1st available hand image on the player left side
+    //select the 1st available hand image on the player right side
+    //clone both images, put them in exactly the same spot as the origin.  the clones should have position fixed.  
+        //use .position to get the left/top for each image.  use that to position the copied images
+    //animate both images to move towards center and get larger
+        //.animate({ left: 30%, height: 200%})
+
+    //put on an overlay dark area over the entire background
+    //add on versus graphic between both pokemon
+    //play fight animation
+    //whiever pokemon dies, have it fade to 0 opacity
+    //make background and winner disappear
+    //change dead pokemon to skull icon
 }
