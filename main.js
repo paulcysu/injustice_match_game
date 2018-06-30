@@ -8,13 +8,30 @@ function run_on_load () {
     $(".card").addClass("flippable");
     add_event_listener();
     game_played = 0;
+    debugger;
+    $(".close").click(function() {
+        $("#win_modal").addClass("shadow");
+    })
     $("#reset").click(function () {
         game_played++;
         reset_stats();
         display_stats();
         $(".card").removeClass("hidden");
+        var left_hand = $("#player_left_hand img");
+        var right_hand = $("#player_right_hand img");
+        left_hand.attr("src", "img/empty_card.png");
+        right_hand.attr("src", "img/empty_card.png");
+        player_1_health = 3;
+        player_2_health = 3;
+        $(".left_health").addClass("green");
+        $(".right_health").addClass("green")
+        $(".card").addClass("flippable");
+        turn_index = false;
+        $(".card_back").addClass("empty filled");
     });
 }
+
+
 
 function add_event_listener () {
     $("#game-area").on("click", ".flippable", card_clicked)
@@ -22,12 +39,14 @@ function add_event_listener () {
 
 var first_card_clicked = null;
 var second_card_clicked = null;
-var total_possible_matches = 10;
+var total_possible_matches = 4;
 var match_counter = 0;
 var click_disabled = false;
 var attempt = 0;
 var accuracy = 0;
 var turn_index = false;
+var player_1_health = 3;
+var player_2_health = 3;
 
 function card_clicked() {
     if (click_disabled === true) {
@@ -61,19 +80,18 @@ function card_clicked() {
                 var firstAvailableSlot = $(availableLeftHand[0]);
                 firstAvailableSlot.removeClass('empty');
                 firstAvailableSlot.attr("src", match_image);
-                // if (turn_index) {
-                //     matched_battle();
-                //     }
-                turn_index = !turn_index;
-                // above code by dan //
-                if (match_counter === total_possible_matches) {
-                    alert("!!!!BATTLE!!!!");
+                if (turn_index) {
                     matched_battle();
-                    if (player_1_health === 0) {
-                        alert("!!!!Player 2 Wins!!!!")
-                    } else if (player_2_health === 0) {
-                        alert("!!!Player 1 Wins!!!!")
                     }
+                turn_index = !turn_index;
+                if (player_1_health === 0) {
+                        $("#win_modal").removeClass("shadow");
+                        var winner_text = $("<p>").text("Player 2 Wins!");
+                        $(".modal_text").append(winner_text);
+                } else if (player_2_health === 0) {
+                        $("#win_modal").removeClass("shadow");
+                        var winner_text = $("<p>").text("Player 1 Wins!");
+                        $(".modal_text").append(winner_text);
                 } else {
                     return;
                 }
@@ -136,6 +154,21 @@ var image_front_array = [
     "img/batgirl.jpeg"
 ]
 
+var image_battle_value = {
+    "img/mario.jpg": 10,
+    "img/aquaman.png": 1,
+    "img/green_arrow.jpg": 6,
+    "img/flash.png": 8,
+    "img/harley_quinn.png": 2,
+    "img/joker.png": 5,
+    "img/robin.png": 4,
+    "img/super_girl.png": 9,
+    "img/wonder_woman.jpg": 7,
+    "img/batgirl.jpeg": 3,
+}
+
+// make object and assign value to each image.
+
 var random_image_array = [];
 
 function randomize (array) {
@@ -175,31 +208,41 @@ function add_cards () {
 }
 
 function matched_battle(){
-    var available_left_hand = $(".player_left_card > .filled").removeClass("filled");
-    var first_available_left_slot = $(available_left_hand[0]);
+    var available_left_hand = $(".player_left_card > .filled");
+    var first_available_left_slot = $(available_left_hand[0]).removeClass("filled");
     var clone_image_left = first_available_left_slot.clone().addClass("animate");
     $("#left_card_1").parent().append(clone_image_left);
     clone_image_left.css("position", "fixed");
-    clone_image_left.animate({left: "20%", height: "100%"});
-    var available_right_hand = $(".player_right_card > .filled").removeClass("filled");
-    var first_available_right_slot = $(available_right_hand[0]);
+    clone_image_left.animate({left: "20%", width: "30%", top:"15%"});
+    var available_right_hand = $(".player_right_card > .filled");
+    var first_available_right_slot = $(available_right_hand[0]).removeClass("filled");
     var clone_image_right = first_available_right_slot.clone().addClass("animate");
     $("#right_card_1").parent().append(clone_image_right);
     clone_image_right.css("position", "fixed");
-    clone_image_right.animate({right: "20%", height: "100%"});
-    clone_image_right.fadeOut();
-    
-    //select the 1st available hand image on the player left side
-    //select the 1st available hand image on the player right side
-    //clone both images, put them in exactly the same spot as the origin.  the clones should have position fixed.  
-        //use .position to get the left/top for each image.  use that to position the copied images
-    //animate both images to move towards center and get larger
-        //.animate({ left: 30%, height: 200%})
-
-    //put on an overlay dark area over the entire background
-    //add on versus graphic between both pokemon
-    //play fight animation
-    //whiever pokemon dies, have it fade to 0 opacity
-    //make background and winner disappear
-    //change dead pokemon to skull icon
+    clone_image_right.animate({right: "20%", width: "30%", top: "15%"});
+    setTimeout(function() {
+        clone_image_right.remove();
+        clone_image_left.remove();
+    }, 2000)
+    for (var image in image_battle_value) {
+        if (clone_image_right.attr("src") === image) {
+            clone_image_right.attr("value", (image_battle_value[image]));
+        } else if (clone_image_left.attr("src") === image) {
+            clone_image_left.attr("value", (image_battle_value[image]));
+        }
+    }
+    if (clone_image_right.attr("value") > clone_image_left.attr("value")) {
+        clone_image_left.fadeOut();
+        player_1_health--;
+        var health_box = $("#player_left_health > .green");
+        var first_health_box = $(health_box[0]);
+        first_health_box.removeClass("green");
+    } else {
+        clone_image_right.fadeOut();
+        player_2_health--;
+        // $("#player_right_health div:nth-child(1)").remove();
+        var health_box = $("#player_right_health > .green");
+        var first_health_box = $(health_box[0]);
+        first_health_box.removeClass("green");
+    }
 }
