@@ -8,7 +8,6 @@ function run_on_load () {
     $(".card").addClass("flippable");
     add_event_listener();
     game_played = 0;
-    debugger;
     $(".close").click(function() {
         $("#win_modal").addClass("shadow");
     })
@@ -86,12 +85,10 @@ function card_clicked() {
                 turn_index = !turn_index;
                 if (player_1_health === 0) {
                         $("#win_modal").removeClass("shadow");
-                        var winner_text = $("<p>").text("Player 2 Wins!");
-                        $(".modal_text").append(winner_text);
+                        $(".winner_text").text("Player 2 Wins!");
                 } else if (player_2_health === 0) {
                         $("#win_modal").removeClass("shadow");
-                        var winner_text = $("<p>").text("Player 1 Wins!");
-                        $(".modal_text").append(winner_text);
+                        $(".winner_text").text("Player 1 Wins!");
                 } else {
                     return;
                 }
