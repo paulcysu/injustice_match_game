@@ -178,7 +178,6 @@ function randomize (array) {
 function add_cards () {
     for (var x = 0; x < 20; x++) {
         var chosen_img = random_image_array.splice(19 - x, 1)[0];
-        console.log(chosen_img);
         var card_container = $("<div>", {
             "class": "card"
         });
