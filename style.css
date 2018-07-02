@@ -20,7 +20,7 @@ header {
 }
 
 #game_title img {
-    height: 170%;
+    height: 160%;
     margin: 0 auto;
     display: flex;
     position: relative;
@@ -157,6 +157,9 @@ h3 {
     position: relative;
 }
 
+#stats_row {
+}
+
 /* functionality below */
 
 .hidden .back {
@@ -215,6 +218,7 @@ h3 {
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
+    text-align: center;
 }
 
 .modal_image {
@@ -229,6 +233,14 @@ h3 {
     padding-right: 7%;
 }
 
+.about_modal_text {
+    font-size: 1.5em;
+    padding-top: 14%;
+    padding-bottom: 15%;
+    width: 80%;
+    margin: 0 auto;
+}
+
 .close {
     color: #aaa;
     float: right;
@@ -238,4 +250,8 @@ h3 {
 
 .close:hover {
     cursor: pointer;
+}
+
+.about_image {
+    width: 40%;
 }

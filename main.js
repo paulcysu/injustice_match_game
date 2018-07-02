@@ -10,6 +10,7 @@ function run_on_load () {
     game_played = 0;
     $(".close").click(function() {
         $("#win_modal").addClass("shadow");
+        $("#about_modal").addClass("shadow");
     })
     $("#reset").click(function () {
         game_played++;
@@ -30,10 +31,11 @@ function run_on_load () {
     });
 }
 
-
-
 function add_event_listener () {
     $("#game-area").on("click", ".flippable", card_clicked)
+    $(".about").on("click", function () {
+        $("#about_modal").removeClass("shadow");
+    })
 }
 
 var first_card_clicked = null;
