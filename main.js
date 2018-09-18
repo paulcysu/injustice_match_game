@@ -1,14 +1,20 @@
-$(document).ready(run_on_load);
+$(document).ready(initialize_game);
 
-function run_on_load () {
-    game = new CardBattle();
-    game.randomize(game.image_front_array);
+var player1;
+var player2;
+var game;
+
+function initialize_game () {
+    game = new Matching_Game();
+    game.randomizeCards(game.image_front_array);
+    player1 = new Player();
+    player2 = new Player();
     game.add_cards();
     game.add_event_listener();
     $(".card").addClass("flippable");
 }
 
-class CardBattle {
+class Matching_Game {
     constructor () {
         this.first_card_clicked = null;
         this.second_card_clicked = null;
@@ -21,7 +27,6 @@ class CardBattle {
         this.accuracy = 0;
         this.player_1_health = 3;
         this.player_2_health = 3;
-
         this.image_front_array = [
             "img/aquaman.png",
             "img/aquaman.png", 
@@ -57,15 +62,16 @@ class CardBattle {
             "img/aquaman.png": 0,
         }
         this.random_image_array = [];
-
     }
-    randomize (array) {
+
+    randomizeCards (array) {
         this.random_image_array = [];
         while (array.length > 0) {
             var chosen_random = array.splice(Math.floor(Math.random() * array.length), 1)[0];
             this.random_image_array.push(chosen_random);
         }
     }
+
     add_cards () {
         for (var x = 0; x < 20; x++) {
             var chosen_img = this.random_image_array.splice(19 - x, 1)[0];
@@ -86,13 +92,14 @@ class CardBattle {
                 "class": "back",
             });
             var card_back_img = $("<img>", {
-                attr: {src: 'img/back_image.jpg'},
+                attr: {src: 'img/persona.png'},
                 "class": "card_back"
             })
         }
         $(".card").append(card_back);
         $(".back").append(card_back_img);
     }
+
     add_event_listener () {
         $("#game-area").on("click", ".flippable", this.card_clicked.bind(this))
         $(".about").on("click", function () {
@@ -104,6 +111,8 @@ class CardBattle {
         })
         $("#reset").click(this.reset_button.bind(this));
     }
+
+
     card_clicked(event) {
         if (this.click_disabled === true) {
             return;
@@ -157,6 +166,7 @@ class CardBattle {
             }
         }
     }
+
     flip_back() {
         $(this.first_card_clicked).parent().parent().removeClass("hidden");
         $(this.second_card_clicked).parent().parent().removeClass("hidden");
@@ -165,6 +175,7 @@ class CardBattle {
         this.second_card_clicked = null;
         this.click_disabled = false;
     }
+
     matched_battle(){
         var available_left_hand = $(".player_left_card > .filled");
         var first_available_left_slot = $(available_left_hand[0]).removeClass("filled");
@@ -203,20 +214,24 @@ class CardBattle {
             first_health_box.removeClass("green");
         }
     }
+
     display_stats () {
         var game_played_append = $(".game_played .value").html(this.game_played);
         var attempt_append = $(".attempt .value").html(this.attempt);
         var accuracy_append = $(".accuracy .value").html(this.accuracy);
     }
+
     run_accuracy () {
         this.accuracy = ((this.match_counter / this.attempt)*100).toFixed(2) + "%";
     }
+
     reset_stats () {
         this.accuracy = 0;
         this.match_counter = 0;
         this.attempt = 0;
         this.display_stats();
     }
+
     reset_button () {
         this.game_played++;
         this.player_1_health = 3;
@@ -258,5 +273,15 @@ class CardBattle {
         $(".right_health").addClass("green")
         $(".card").addClass("flippable");
         $(".card_back").addClass("empty filled");
+    }
+}
+
+class Player {
+    constructor () {
+        this.image = "img/empty_card.png";
+        this.health = 3;
+    }
+    lose_battle () {
+        this.health--;
     }
 }
