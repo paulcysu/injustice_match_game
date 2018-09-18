@@ -1,12 +1,73 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Advance Wars || Matching Game</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="main.js"></script>
+    <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="loading.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="loading.js"></script>
+    <script type="text/javascript" src="main.js"></script>
 </head>
 <body>
 
+<div class="loader">
+    <div class="logo">
+        <p>in-justice</span></p>
+    </div>
+    <div class="loader-frame">
+        <div class="loader1" id="loader1"></div>
+        <div class="loader2" id="loader2"></div>
+    </div>
+</div>
+    
+<div class="container">
+
+    <div class="header">
+        <img src="img/injustice.png">
+    </div>
+
+    <div class="flex-container">
+        <div class="player left">
+            <div class="avatar">
+                <img src="img/batman.png">
+            </div>
+            <div class="health">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="team">
+                <div><img src=""></div>
+                <div><img src=""></div>
+                <div><img src=""></div>
+                <div><img src=""></div>
+                <div><img src=""></div>
+            </div>
+        </div>
+    
+        <div id="card_area">
+        </div>
+    
+        <div class="player right">
+            <div class="avatar">
+                <img src="img/batman.png">
+            </div>
+            <div class="health">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="team">
+                <div><img src=""></div>
+                <div><img src=""></div>
+                <div><img src=""></div>
+                <div><img src=""></div>
+                <div><img src=""></div>
+            </div>
+        </div>
+    </div>
+
+ 
+</div>
 </body>
 </html>
