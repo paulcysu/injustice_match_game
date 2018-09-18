@@ -10,8 +10,8 @@ function initialize_game () {
     player1 = new Player();
     player2 = new Player();
     game.add_cards();
-    game.add_event_listener();
     $(".card").addClass("flippable");
+    game.add_event_listener();
 }
 
 class Matching_Game {
@@ -101,15 +101,16 @@ class Matching_Game {
     }
 
     add_event_listener () {
-        $("#game-area").on("click", ".flippable", this.card_clicked.bind(this))
-        $(".about").on("click", function () {
+        // $("#card_area").on("click", ".flippable", this.card_clicked.bind(this));
+        $(".back img").on("click", this.card_clicked.bind(this));
+        $(".rules").on("click", function () {
             $("#about_modal").removeClass("shadow");
         })
         $(".close").click(function() {
             $("#win_modal").addClass("shadow");
             $("#about_modal").addClass("shadow");
         })
-        $("#reset").click(this.reset_button.bind(this));
+        $(".reset").click(this.reset_button.bind(this));
     }
 
 
@@ -126,6 +127,7 @@ class Matching_Game {
                 this.attempt++;
                 this.second_card_clicked = $(event.target);
                 if ($(this.first_card_clicked).parent().parent().find(".card_front").attr("src") === $(this.second_card_clicked).parent().parent().find(".card_front").attr("src")) {
+                    this.first_card_clicked.parent().parent().removeClass("flippable");
                     this.second_card_clicked.parent().parent().removeClass("flippable");
                     this.match_counter++;
                     var match_image = $(this.first_card_clicked).parent().parent().find(".card_front").attr("src");
@@ -139,9 +141,11 @@ class Matching_Game {
                     } else {
                         currentPlayerSide = 'left';
                     }
-                    var availableLeftHand = $(".player_"+currentPlayerSide+"_card > .empty");
+                    debugger;
+                    var availableLeftHand = $('.'+currentPlayerSide+" .empty");
                     var firstAvailableSlot = $(availableLeftHand[0]);
                     firstAvailableSlot.removeClass('empty');
+                    firstAvailableSlot.addClass('filled');
                     firstAvailableSlot.attr("src", match_image);
                     if (this.turn_index) {
                         this.matched_battle();
@@ -160,7 +164,6 @@ class Matching_Game {
                     this.click_disabled = true;
                     this.run_accuracy();
                     this.display_stats();
-                    debugger;
                     setTimeout(this.flip_back.bind(this), 1000);
                 }
             }
@@ -177,13 +180,14 @@ class Matching_Game {
     }
 
     matched_battle(){
-        var available_left_hand = $(".player_left_card > .filled");
+        debugger;
+        var available_left_hand = $(".left .filled");
         var first_available_left_slot = $(available_left_hand[0]).removeClass("filled");
         var clone_image_left = first_available_left_slot.clone().addClass("animate");
         $("#left_card_1").parent().append(clone_image_left);
         clone_image_left.css("position", "fixed");
         clone_image_left.animate({left: "20%", width: "30%", top:"15%"});
-        var available_right_hand = $(".player_right_card > .filled");
+        var available_right_hand = $(".right .filled");
         var first_available_right_slot = $(available_right_hand[0]).removeClass("filled");
         var clone_image_right = first_available_right_slot.clone().addClass("animate");
         $("#right_card_1").parent().append(clone_image_right);
