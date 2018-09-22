@@ -106,13 +106,15 @@ class Matching_Game {
         $(".rules").on("click", function () {
             $("#about_modal").removeClass("shadow");
         })
-        $(".close").click(function() {
-            $("#win_modal").addClass("shadow");
-            $("#about_modal").addClass("shadow");
-        })
+        $(".close").click(this.closeModal);
+        $("#play").click(this.closeModal);
         $(".reset").click(this.reset_button.bind(this));
     }
 
+    closeModal() {
+        $("#win_modal").addClass("shadow");
+        $("#about_modal").addClass("shadow");
+    }
 
     card_clicked(event) {
         if (this.click_disabled === true) {
@@ -141,7 +143,6 @@ class Matching_Game {
                     } else {
                         currentPlayerSide = 'left';
                     }
-                    debugger;
                     var availableLeftHand = $('.'+currentPlayerSide+" .empty");
                     var firstAvailableSlot = $(availableLeftHand[0]);
                     firstAvailableSlot.removeClass('empty');
@@ -180,19 +181,18 @@ class Matching_Game {
     }
 
     matched_battle(){
-        debugger;
         var available_left_hand = $(".left .filled");
         var first_available_left_slot = $(available_left_hand[0]).removeClass("filled");
         var clone_image_left = first_available_left_slot.clone().addClass("animate");
-        $("#left_card_1").parent().append(clone_image_left);
+        available_left_hand.parent().append(clone_image_left);
         clone_image_left.css("position", "fixed");
-        clone_image_left.animate({left: "20%", width: "30%", top:"15%"});
+        clone_image_left.animate({left: "15%", top: "15%"});
         var available_right_hand = $(".right .filled");
         var first_available_right_slot = $(available_right_hand[0]).removeClass("filled");
         var clone_image_right = first_available_right_slot.clone().addClass("animate");
-        $("#right_card_1").parent().append(clone_image_right);
+        available_right_hand.parent().append(clone_image_right);
         clone_image_right.css("position", "fixed");
-        clone_image_right.animate({right: "20%", width: "30%", top: "15%"});
+        clone_image_right.animate({right: "15%", top: "15%"});
         setTimeout(function() {
             clone_image_right.remove();
             clone_image_left.remove();
@@ -206,15 +206,19 @@ class Matching_Game {
         }
         if (clone_image_right.attr("value") > clone_image_left.attr("value")) {
             clone_image_left.fadeOut();
+            clone_image_right.animate({right: "33%", top: "15%"});
+            available_left_hand.css("opacity", 0.5);
             this.player_1_health--;
-            var health_box = $("#player_left_health > .green");
-            var first_health_box = $(health_box[0]);
+            var health_box = $(".left > .health > .green");
+            var first_health_box = $(health_box[health_box.length - 1]);
             first_health_box.removeClass("green");
         } else {
             clone_image_right.fadeOut();
+            clone_image_left.animate({left: "33%", top: "15%"});
+            available_right_hand.css("opacity", 0.5);
             this.player_2_health--;
-            var health_box = $("#player_right_health > .green");
-            var first_health_box = $(health_box[0]);
+            var health_box = $(".right > .health > .green");
+            var first_health_box = $(health_box[health_box.length - 1]);
             first_health_box.removeClass("green");
         }
     }
@@ -266,17 +270,14 @@ class Matching_Game {
             "img/batgirl.jpeg",
             "img/batgirl.jpeg"
         ];
-        this.randomize(this.image_front_array);
+        this.randomizeCards(this.image_front_array);
         this.add_cards();
-        var left_hand = $("#player_left_hand img");
-        var right_hand = $("#player_right_hand img");
-        left_hand.attr("src", "img/empty_card.png");
-        right_hand.attr("src", "img/empty_card.png");
+        var teams = $(".player .team img");
+        teams.attr("src", "").addClass("empty");
         $(".card").removeClass("hidden");
-        $(".left_health").addClass("green");
-        $(".right_health").addClass("green")
+        $(".player .health > *").addClass("green");
         $(".card").addClass("flippable");
-        $(".card_back").addClass("empty filled");
+        $(".back").addClass("empty filled");
     }
 }
 
