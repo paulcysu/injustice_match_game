@@ -24,6 +24,10 @@
 
     <div class="header">
         <img src="img/injustice.png">
+        <div class="navbar">
+            <div class="rules">Rules</div>
+            <div class="reset">Reset</div>
+        </div>
     </div>
 
     <div class="flex-container">
@@ -32,16 +36,16 @@
                 <img src="img/batman.png">
             </div>
             <div class="health">
-                <div></div>
-                <div></div>
-                <div></div>
+                <div class='green'></div>
+                <div class='green'></div>
+                <div class='green'></div>
             </div>
             <div class="team">
-                <div><img src=""></div>
-                <div><img src=""></div>
-                <div><img src=""></div>
-                <div><img src=""></div>
-                <div><img src=""></div>
+                <div><img class="empty" src=""></div>
+                <div><img class="empty" src=""></div>
+                <div><img class="empty" src=""></div>
+                <div><img class="empty" src=""></div>
+                <div><img class="empty" src=""></div>
             </div>
         </div>
     
@@ -53,20 +57,37 @@
                 <img src="img/batman.png">
             </div>
             <div class="health">
-                <div></div>
-                <div></div>
-                <div></div>
+                <div class='green'></div>
+                <div class='green'></div>
+                <div class='green'></div>
             </div>
             <div class="team">
-                <div><img src=""></div>
-                <div><img src=""></div>
-                <div><img src=""></div>
-                <div><img src=""></div>
-                <div><img src=""></div>
+                <div><img class="empty" src=""></div>
+                <div><img class="empty" src=""></div>
+                <div><img class="empty" src=""></div>
+                <div><img class="empty" src=""></div>
+                <div><img class="empty" src=""></div>
             </div>
         </div>
     </div>
 
+    <div id="about_modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="about_modal_text">
+                <img class="about_image" src='img/injustice.png'>
+                <h3>About</h3>
+                <p>This is a two player game where players takes turn matching cards to recruit characters to battle after player two matches.</p>
+                <ul>
+                    <li>The player who takes opponent's health to zero wins.</li>
+                    <li>Player's turn ends until player has made a match.</li>
+                    <li>The battle between characters are determined by the programmer.</li>
+                    <li>Enjoy and have fun!</li>
+                </ul>
+                <button id="play">Play</button>
+            </div>
+        </div>
+    </div>
  
 </div>
 </body>
