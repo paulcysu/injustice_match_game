@@ -143,6 +143,7 @@ class Matching_Game {
                     } else {
                         currentPlayerSide = 'left';
                     }
+                    $('.player .avatar').toggleClass('highlight');
                     var availableLeftHand = $('.'+currentPlayerSide+" .empty");
                     var firstAvailableSlot = $(availableLeftHand[0]);
                     firstAvailableSlot.removeClass('empty');
@@ -155,9 +156,11 @@ class Matching_Game {
                     if (this.player_1_health === 0) {
                             $("#win_modal").removeClass("shadow");
                             $(".winner_text").text("Player 2 Wins!");
+                            $(".back img").off();
                     } else if (this.player_2_health === 0) {
                             $("#win_modal").removeClass("shadow");
                             $(".winner_text").text("Player 1 Wins!");
+                            $(".back img").off();
                     } else {
                         return;
                     }
@@ -273,11 +276,13 @@ class Matching_Game {
         this.randomizeCards(this.image_front_array);
         this.add_cards();
         var teams = $(".player .team img");
+        teams.css("opacity", 1);
         teams.attr("src", "").addClass("empty");
         $(".card").removeClass("hidden");
         $(".player .health > *").addClass("green");
         $(".card").addClass("flippable");
         $(".back").addClass("empty filled");
+        game.add_event_listener();
     }
 }
 
