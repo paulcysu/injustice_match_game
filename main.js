@@ -283,6 +283,8 @@ class Matching_Game {
         $(".card").addClass("flippable");
         $(".back").addClass("empty filled");
         game.add_event_listener();
+        $(".player .avatar").removeClass("highlight");
+        $(".player .left .avatar").addClass("highlight");
     }
 }
 
