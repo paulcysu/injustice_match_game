@@ -1,7 +1,9 @@
 $(document).ready(initializeApplication);
 
 function initializeApplication() {
-    closeLoader();
+    $(window).bind("load", function() {
+        closeLoader();
+     });
 }
 
 function closeLoader() {
@@ -13,6 +15,7 @@ function closeLoader() {
 
     function addDisplayNone() {
         loader.addClass('none')
+        $('#about_modal').removeClass('shadow');
     }
 
     setTimeout(addFade, 60);
