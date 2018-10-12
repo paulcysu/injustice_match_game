@@ -71,8 +71,6 @@ img {
     float: right;
 }
 
-/* Card Area */
-
 .flex-container {
     display: flex;
     height: 90%;
@@ -133,10 +131,6 @@ img {
     padding-top: 3%;
 }
 
-.back {
-    /* opacity: 0.5; */
-}
-
 .avatar {
     margin-bottom: 5%;
     box-sizing: border-box;
@@ -182,14 +176,6 @@ img {
 
 .hidden .back {
     display: none;
-}
-
-/* .hidden {
-    display: none;
-} */
-
-.matched {
-
 }
 
 .animate {
