@@ -21,7 +21,8 @@ class Matching_Game {
         this.click_disabled = false;
         this.turn_index = false;
         this.match_counter = 0;
-        // this.attempts = 0;
+        this.attempts = 0;
+        this.missed = false;
         this.image_front_array = [
             "img/aquaman.png",
             "img/aquaman.png", 
@@ -45,17 +46,17 @@ class Matching_Game {
             "img/batgirl.jpeg",
         ]
         this.image_battle_value = {
-            "img/mario.jpg": 9,
-            "img/super_girl.png": 8,
-            "img/flash.png": 7,
-            "img/wonder_woman.jpg": 6,
-            "img/green_arrow.jpg": 5,
-            "img/joker.png": 4,
-            "img/robin.png": 3,
-            "img/batgirl.jpeg": 2,
-            "img/harley_quinn.png": 1,
-            "img/aquaman.png": 0,
-            "img/persona.png": -1
+            "img/mario.jpg": 99,
+            "img/super_girl.png": 9,
+            "img/flash.png": 8,
+            "img/wonder_woman.jpg": 7,
+            "img/green_arrow.jpg": 6,
+            "img/joker.png": 5,
+            "img/robin.png": 4,
+            "img/batgirl.jpeg": 3,
+            "img/harley_quinn.png": 2,
+            "img/aquaman.png": 1,
+            "img/persona.png": 0
         }
         this.random_image_array = [];
     }
@@ -121,28 +122,34 @@ class Matching_Game {
                 this.first_card_clicked.removeClass("flippable");
                 return this.first_card_clicked;
             } else {
-                // this.attempts++;
-                // if (this.attempts > 2) {
-                //     // this.first_card_clicked = null;
-                //     this.second_card_clicked = null;
-                //     var currentPlayerSide = '';
-                //     if(this.turn_index){
-                //         currentPlayerSide = 'right';
-                //     } else {
-                //         currentPlayerSide = 'left';
-                //     }
-                //     var availableLeftHand = $('.'+currentPlayerSide+" .empty");
-                //     var firstAvailableSlot = $(availableLeftHand[0]);
-                //     firstAvailableSlot.removeClass('empty');
-                //     firstAvailableSlot.addClass('filled');
-                //     firstAvailableSlot.attr("src", './img/persona.png');
-                //     this.attempts = 0;
-                //     this.turn_index = !this.turn_index;
-                //     $('.player .avatar').toggleClass('highlight');
-                // }
+                this.attempts++;
+                this.second_card_clicked = $(event.target);
+                if (this.attempts > 2) {
+                    // this.first_card_clicked = null;
+                    this.second_card_clicked = null;
+                    var currentPlayerSide = '';
+                    if(this.turn_index){
+                        currentPlayerSide = 'right';
+                        this.missed = true;
+                    } else {
+                        currentPlayerSide = 'left';
+                    }
+                    var availableLeftHand = $('.'+currentPlayerSide+" .empty");
+                    var firstAvailableSlot = $(availableLeftHand[0]);
+                    firstAvailableSlot.removeClass('empty');
+                    firstAvailableSlot.addClass('filled');
+                    firstAvailableSlot.attr("src", './img/persona.png');
+                    if (this.missed) {
+                        this.matched_battle();
+                        this.missed = false;
+                    }
+                    this.attempts = 0;
+                    this.turn_index = !this.turn_index;
+                    $('.player .avatar').toggleClass('highlight');
+                }
                 this.second_card_clicked = $(event.target);
                 if ($(this.first_card_clicked).parent().parent().find(".card_front").attr("src") === $(this.second_card_clicked).parent().parent().find(".card_front").attr("src")) {
-                    // this.attempts = 0;
+                    this.attempts = 0;
                     this.first_card_clicked.parent().parent().removeClass("flippable");
                     this.second_card_clicked.parent().parent().removeClass("flippable");
                     this.match_counter++;
@@ -165,20 +172,24 @@ class Matching_Game {
                         this.matched_battle();
                     }
                     this.turn_index = !this.turn_index;
-                    if (player1.health === 0) {
-                            setTimeout( () => $("#win_modal").removeClass("shadow"), 2000);
-                            $(".winner_text").text("Player 2 Wins!");
-                            $(".back img").off();
-                    } else if (player2.health === 0) {
-                            setTimeout( () => $("#win_modal").removeClass("shadow"), 2000);
-                            $(".winner_text").text("Player 1 Wins!");
-                            $(".back img").off();
-                    } else {
-                        return;
-                    }
                 } else {
                     this.click_disabled = true;
                     setTimeout(this.flip_back.bind(this), 1000);
+                }
+                if (player1.health === 0 && player2.health === 0) {
+                    setTimeout( () => $("#win_modal").removeClass("shadow"), 2000);
+                    $(".winner_text").text("Tie!");
+                    $(".back img").off();
+                } else if (player1.health === 0) {
+                    setTimeout( () => $("#win_modal").removeClass("shadow"), 2000);
+                    $(".winner_text").text("Player 2 Wins!");
+                    $(".back img").off();
+                } else if (player2.health === 0) {
+                    setTimeout( () => $("#win_modal").removeClass("shadow"), 2000);
+                    $(".winner_text").text("Player 1 Wins!");
+                    $(".back img").off();
+                } else {
+                    return;
                 }
             }
         }
@@ -194,7 +205,7 @@ class Matching_Game {
     }
 
     matched_battle(){
-        // this.attempts = 0;
+        this.attempts = 0;
         var available_left_hand = $(".left .filled");
         var first_available_left_slot = $(available_left_hand[0]).removeClass("filled");
         var clone_image_left = first_available_left_slot.clone().addClass("animate");
@@ -218,7 +229,14 @@ class Matching_Game {
                 clone_image_left.attr("value", (this.image_battle_value[image]));
             }
         }
-        if (clone_image_right.attr("value") > clone_image_left.attr("value")) {
+        if (this.missed) {
+            clone_image_right.fadeOut();
+            clone_image_left.animate({left: "33%", top: "15%"});
+            available_right_hand.css("opacity", 0.5);
+            player2.health--;
+            var health_box = $(".right > .health > .green");
+            var first_health_box = $(health_box[health_box.length - 1]);
+            first_health_box.removeClass("green");            
             clone_image_left.fadeOut();
             clone_image_right.animate({right: "33%", top: "15%"});
             available_left_hand.css("opacity", 0.5);
@@ -227,13 +245,23 @@ class Matching_Game {
             var first_health_box = $(health_box[health_box.length - 1]);
             first_health_box.removeClass("green");
         } else {
-            clone_image_right.fadeOut();
-            clone_image_left.animate({left: "33%", top: "15%"});
-            available_right_hand.css("opacity", 0.5);
-            player2.health--;
-            var health_box = $(".right > .health > .green");
-            var first_health_box = $(health_box[health_box.length - 1]);
-            first_health_box.removeClass("green");
+            if (clone_image_right.attr("value") > clone_image_left.attr("value")) {
+                clone_image_left.fadeOut();
+                clone_image_right.animate({right: "33%", top: "15%"});
+                available_left_hand.css("opacity", 0.5);
+                player1.health--;
+                var health_box = $(".left > .health > .green");
+                var first_health_box = $(health_box[health_box.length - 1]);
+                first_health_box.removeClass("green");
+            } else {
+                clone_image_right.fadeOut();
+                clone_image_left.animate({left: "33%", top: "15%"});
+                available_right_hand.css("opacity", 0.5);
+                player2.health--;
+                var health_box = $(".right > .health > .green");
+                var first_health_box = $(health_box[health_box.length - 1]);
+                first_health_box.removeClass("green");
+            }
         }
     }
 
@@ -241,6 +269,8 @@ class Matching_Game {
         this.game_played++;
         player1.health = 3;
         player2.health = 3;
+        this.attempts = 0;
+        this.missed = false;
         this.damage_turn_counter = 0;
         this.turn_index = false;
         $("#card_area").empty();
@@ -277,7 +307,7 @@ class Matching_Game {
         $(".back").addClass("empty filled");
         game.add_event_listener();
         $(".player .avatar").removeClass("highlight");
-        $(".player .left .avatar").addClass("highlight");
+        $(".left > .avatar").addClass("highlight");
     }
 }
 
